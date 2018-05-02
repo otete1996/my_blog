@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   def index
     @q=Post.all.order(created_at: :desc).ransack(params[:q])
     @posts=@q.result.page(params[:page]).per(2)
-    @new_posts=Post.all.order(created_at: :desc).limit(5)
+    @new_posts=Post.all.find_newest_article
     @author=Author.first
   end
 
