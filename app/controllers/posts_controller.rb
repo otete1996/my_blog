@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post,only:[:show,:edit,:update,:destroy]
   def index
-    @posts=Post.all
-    @new_posts=Post.all
+    @q=Post.all.order(created_at: :desc).ransack(params[:q])
+    @posts=@q.result.page(params[:page]).per(2)
+    @new_posts=Post.all.order(created_at: :desc).limit(5)
     @author=Author.first
   end
 
